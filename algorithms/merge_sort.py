@@ -19,16 +19,13 @@ def merge(left, right):
 
     return result
 
-def merge_sort_recur(A):
+def sort(A):
     if len(A) < 2:
         return A
 
     mid = len(A) / 2
 
-    left = merge_sort_recur(A[:mid])
-    right = merge_sort_recur(A[mid:])
+    left = sort(A[:mid])
+    right = sort(A[mid:])
     
     return merge(left, right)
-
-def merge_sort(A):
-    return merge_sort_recur(A)
