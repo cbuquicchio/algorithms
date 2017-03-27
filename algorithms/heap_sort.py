@@ -1,3 +1,5 @@
+from utils import swap
+
 def max_heapify(A, i, heap_size):
     l = (i << 1) + 1
     r = l + 1
@@ -10,9 +12,7 @@ def max_heapify(A, i, heap_size):
         largest = r
 
     if largest != i:
-        tmp = A[i]
-        A[i] = A[largest]
-        A[largest] = tmp
+        swap(A, i, largest)
 
         max_heapify(A, largest, heap_size)
 
@@ -26,9 +26,7 @@ def sort(A):
     build_max_heap(A)
 
     for i in range(len(A) - 1, 0, -1):
-        tmp = A[0]
-        A[0] = A[i]
-        A[i] = tmp
+        swap(A, 0, i)
         heap_size -= 1
 
         max_heapify(A, 0, heap_size)
