@@ -1,11 +1,11 @@
+from random import randint
 from utils import swap
 
 def partition(A, p, r):
     i = p - 1
-    pivot = A[r]
 
     for j in range(p, r):
-        if A[j] <= pivot:
+        if A[j] <= A[r]:
             i += 1
             swap(A, i, j)
 
@@ -13,6 +13,12 @@ def partition(A, p, r):
     swap(A, i, r)
 
     return i
+
+def randomize_pivot(A, p, r):
+    i = randint(p, r)
+    swap(A, r, i)
+
+    return partition(A, p, r)
 
 def quick_sort(A, p, r):
     if p <= r:
