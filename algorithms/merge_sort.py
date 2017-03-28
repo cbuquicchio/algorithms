@@ -27,5 +27,5 @@ def sort(A):
 
     left = sort(A[:mid])
     right = sort(A[mid:])
-    
+
     return merge(left, right)

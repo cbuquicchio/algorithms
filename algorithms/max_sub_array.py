@@ -7,11 +7,11 @@ def find_max_crossing_subarray(A, low, mid, high):
 
     for i in range(mid, low - 1, -1):
         sum += A[i]
-        
+
         if sum > left_sum:
             left_sum = sum
             max_left = i
-    
+
     sum = 0
 
     for j in range(mid + 1, high+1):
