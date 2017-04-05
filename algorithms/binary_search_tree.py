@@ -1,4 +1,4 @@
-class Tree:
+class Tree(object):
     def __init__(self):
         self.root = None
 
@@ -120,8 +120,9 @@ class Tree:
 
 
 class TreeNode:
-    def __init__(self, key, left=None, right=None, parent=None):
+    def __init__(self, key, left=None, right=None, parent=None, height=0):
         self.key = key
         self.leftChild = left
         self.rightChild = right
         self.parent = parent
+        self.height = height
