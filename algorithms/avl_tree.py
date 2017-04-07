@@ -11,6 +11,10 @@ class AVLTree(Tree):
         super(self.__class__, self).insert(node)
         self.balance(node)
 
+    def delete(self, node):
+        new = super(self.__class__, self).delete(node)
+        self.balance(new);
+
     def balance(self, node):
         while node != None:
             self._update_height(node)

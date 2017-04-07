@@ -23,33 +23,37 @@ class Tree(object):
         else:
             prev.rightChild = node
 
-    def delete(self, z):
-        if z.leftChild == None:
-            self._transplant(z, z.rightChild)
-        elif z.rightChild == None:
-            self._transplant(z, z.leftChild)
+    def delete(self, node):
+        new_parent = None
+
+        if node.leftChild == None:
+            self._transplant(node, node.rightChild)
+        elif node.rightChild == None:
+            self._transplant(node, node.leftChild)
         else:
-            y = self.minimum(z.rightChild)
+            new_parent = self.minimum(node.rightChild)
 
-            if y.parent != z:
-                self._transplant(y, y.rightChild)
-                y.rightChild = z.rightChild
-                y.rightChild.parent = y
+            if new_parent.parent != node:
+                self._transplant(new_parent, new_parent.rightChild)
+                new_parent.rightChild = node.rightChild
+                new_parent.rightChild.parent = new_parent
 
-            self._transplant(z, y)
-            y.leftChild = z.leftChild
-            y.leftChild.parent = y
+            self._transplant(node, new_parent)
+            new_parent.leftChild = node.leftChild
+            new_parent.leftChild.parent = new_parent
 
-    def _transplant(self, u, v):
-        if u.parent == None:
-            self.root = v
-        elif u == u.parent.leftChild:
-            u.parent.leftChild = v
+        return new_parent
+
+    def _transplant(self, parent, child):
+        if parent.parent == None:
+            self.root = child
+        elif parent == parent.parent.leftChild:
+            parent.parent.leftChild = child
         else:
-            u.parent.rightChild = v
+            parent.parent.rightChild = child
 
-        if v != None:
-            v.parent = u.parent
+        if child != None:
+            child.parent = parent.parent
 
     def search(self, key):
         return self._search(key, self.root)
@@ -64,50 +68,52 @@ class Tree(object):
             return self._search(key, start.rightChild)
 
     def minimum(self, root=None):
+        min = None
+
         if root == None:
-            x = self.root
+            min = self.root
         else:
-            x = root
+            min = root
 
-        while x.leftChild != None:
-            x = x.leftChild
+        while min.leftChild != None:
+            min = min.leftChild
 
-        return x
+        return min
 
     def maximum(self, root=None):
+        max = None
+
         if root == None:
-            x = self.root
+            max = self.root
         else:
-            x = root
+            max = root
 
-        while x.rightChild != None:
-            x = x.rightChild
+        while max.rightChild != None:
+            max = max.rightChild
 
-        return x
+        return max
 
     def successor(self, node):
         if node.rightChild != None:
             return self.minimum(node.rightChild)
 
-        y = node.parent
+        p = node.parent
 
-        while y != None and node == y.rightChild:
-            x = y
-            y = y.parent
+        while p != None and node == p.rightChild:
+            p = p.parent
 
-        return y
+        return p
 
     def predecessor(self, node):
         if node.rightChild != None:
             return self.minimum(node.leftChild)
 
-        y = node.parent
+        p = node.parent
 
-        while y != None and node == y.leftChild:
-            x = y
-            y = y.parent
+        while p != None and node == p.leftChild:
+            p = p.parent
 
-        return y
+        return p
 
     def walk(self):
         self._in_order_walk(self.root)
