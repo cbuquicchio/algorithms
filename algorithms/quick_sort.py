@@ -1,30 +1,32 @@
 from random import randint
 from utils import swap
 
-def partition(A, p, r):
-    i = p - 1
+def select_pivot(A, lo, hi):
+    p = randint(lo, hi)
+    swap(A, lo, p)
 
-    for j in range(p, r):
-        if A[j] <= A[r]:
-            i += 1
+    return lo
+
+
+def partition(A, lo, hi):
+    p = select_pivot(A, lo, hi)
+    i = lo + 1
+
+    for j in xrange(i, hi + 1):
+        if A[j] < A[p]:
             swap(A, i, j)
+            i += 1
 
-    i += 1
-    swap(A, i, r)
+    swap(A, i-1, p)
+    return i-1
 
-    return i
+def quick_sort(A, lo, hi):
+    if lo >= hi:
+        return
 
-def randomize_pivot(A, p, r):
-    i = randint(p, r)
-    swap(A, r, i)
-
-    return partition(A, p, r)
-
-def quick_sort(A, p, r):
-    if p <= r:
-        q = partition(A, p, r)
-        quick_sort(A, p, q - 1)
-        quick_sort(A, q + 1, r)
+    p = partition(A, lo, hi)
+    quick_sort(A, lo, p - 1)
+    quick_sort(A, p + 1, hi)
 
 def sort(A):
     quick_sort(A, 0, len(A) - 1)
